@@ -1,0 +1,53 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+  <modelVersion>4.0.0</modelVersion>
+  <groupId>com.dornauf.rpi2</groupId>
+  <artifactId>rpi2</artifactId>
+  <packaging>jar</packaging>
+  <version>1.0-SNAPSHOT</version>
+  <name>rpi2</name>
+  <url>http://maven.apache.org</url>
+  <dependencies>
+    <dependency>
+      <groupId>junit</groupId>
+      <artifactId>junit</artifactId>
+      <version>3.8.1</version>
+      <scope>test</scope>
+    </dependency>
+  </dependencies>
+<build>
+    <extensions>
+        <!-- Enabling the use of Wagon file -->
+        <extension>
+            <groupId>org.apache.maven.wagon</groupId>
+            <artifactId>wagon-ssh</artifactId>
+            <version>2.8</version>
+        </extension>
+    </extensions>
+
+    <plugins>
+        <plugin>
+            <groupId>org.codehaus.mojo</groupId>
+            <artifactId>wagon-maven-plugin</artifactId>
+            <version>1.0</version>
+	<executions>
+		<execution>
+		<id>upload</id>
+		<goals>
+			<goal>upload</goal>
+		</goals>
+		
+	<configuration>
+
+		<fromDir>${project.build.directory}</fromDir>
+		<includes>*</includes>
+		<excludes>pom.xml</excludes>
+		<url>scp://rpi2.fritz.box</url>
+		<toDir>/tmp</toDir>
+	</configuration>
+</execution>
+        </plugin>
+    </plugins>
+
+</build>
+</project>
